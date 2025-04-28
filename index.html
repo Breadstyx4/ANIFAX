@@ -127,6 +127,12 @@
       "https://i.imgur.com/RzhelQ7.jpeg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9KSJqqqEsFBpAJW13WGTtcOcEezFMw-ck6nDwLnh6iiJW0ZHJs-fof7Ck6Q_9eLNDErk&usqp=CAU",
     ];
+    <!-- Funny Random Popup -->
+<div id="fishPopup" style="display:none; position:absolute; padding:15px; background:#ffffffee; border:2px solid #4CAF50; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.3); width:250px; text-align:center; z-index:1000;">
+  <img src="https://chatgpt.com/c/680fbc79-7ce0-800c-b8a6-d0555d81682c" alt="Fish" style="width:80px; height:auto; margin-bottom:10px;">
+  <p style="margin:0; font-weight:bold;">🐟 The average footsteps of a fish is 0.<br>This is because they don't have legs.</p>
+</div>
+
 
     const fonts = [
       "'Pacifico', cursive",
@@ -139,7 +145,29 @@
     function refreshFact() {
       const img = document.getElementById('animalMeme');
       const loader = document.getElementById('loader');
-      const clickSound = document.getElementById('clickSound');
+      const clickSound = document.getElementById('clickSound');// Handle random popup
+function maybeShowPopup() {
+  const chance = Math.random(); // 0 to 1
+  if (chance < 0.3) { // 30% chance
+    const popup = document.getElementById('fishPopup');
+
+    // Random position inside the screen
+    const padding = 30; // to avoid edge cutting
+    const maxX = window.innerWidth - popup.offsetWidth - padding;
+    const maxY = window.innerHeight - popup.offsetHeight - padding;
+
+    const randomX = Math.floor(Math.random() * maxX) + padding/2;
+    const randomY = Math.floor(Math.random() * maxY) + padding/2;
+
+    popup.style.left = randomX + 'px';
+    popup.style.top = randomY + 'px';
+    popup.style.display = 'block';
+  }
+}
+
+// After initial fact load
+maybeShowPopup();
+
 
       // Play click sound
       clickSound.play();
