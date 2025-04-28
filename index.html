@@ -9,30 +9,38 @@
 
   <style>
     body {
+      margin: 0;
+      padding: 50px 20px;
       text-align: center;
+      font-family: Arial, sans-serif;
       background: linear-gradient(270deg, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1);
       background-size: 800% 800%;
       animation: gradientAnimation 15s ease infinite;
-      padding: 50px;
-      margin: 0;
+      min-height: 100vh;
       overflow-x: hidden;
-      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    @keyframes gradientAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
     img {
-      max-width: 100%;
+      width: 100%;
+      max-width: 400px;
       height: auto;
-      width: 400px;
       border-radius: 15px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
       margin-top: 20px;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease;
     }
 
     h1 {
       font-size: 3em;
       margin-bottom: 20px;
+      transition: all 1s ease;
     }
 
     button {
@@ -51,109 +59,97 @@
       background-color: #45a049;
     }
 
-    @keyframes gradientAnimation {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    /* Loading Spinner */
+    /* Loading screen */
     #loader {
       position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      border: 10px solid #f3f3f3;
-      border-top: 10px solid #4CAF50;
-      border-radius: 50%;
-      width: 80px;
-      height: 80px;
-      animation: spin 1s linear infinite;
+      width: 100%;
+      height: 100%;
+      background: #f0f8ff;
       z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      animation: fadeOut 1s forwards;
+    }
+
+    /* Animations for title */
+    .bounce {
+      animation: bounce 1s ease-out;
+    }
+    .fade {
+      animation: fade 1.5s ease-out;
+    }
+    .zoom {
+      animation: zoom 1.5s ease-out;
+    }
+    .spin {
+      animation: spin 1.5s ease-out;
+    }
+    .slide {
+      animation: slide 1.5s ease-out;
+    }
+
+    /* Add idle state (no animation) */
+    .idle {
+      animation: none;
+    }
+
+    /* Define the keyframe animations */
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fade {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes zoom {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
     }
 
     @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    #content {
-      display: none;
-    }
-
-    /* Popup */
-    #popup {
-      position: absolute;
-      background-color: #fff8dc;
-      border: 2px solid #4CAF50;
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
-      box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
-      display: none;
-      z-index: 1000;
-    }
-
-    #popup img {
-      width: 80px;
-      height: auto;
-    }
-
-    /* Title Animations */
-    .bounce { animation: bounce 2s infinite; }
-    .fade { animation: fade 2s infinite; }
-    .zoom { animation: zoom 2s infinite; }
-    .spin { animation: spinTitle 2s infinite; }
-    .slide { animation: slide 2s infinite; }
-
-    @keyframes bounce {
-      0%, 100% {transform: translateY(0);}
-      50% {transform: translateY(-20px);}
-    }
-    @keyframes fade {
-      0% {opacity: 0;}
-      50% {opacity: 1;}
-      100% {opacity: 0;}
-    }
-    @keyframes zoom {
-      0%, 100% {transform: scale(1);}
-      50% {transform: scale(1.2);}
-    }
-    @keyframes spinTitle {
-      0% {transform: rotate(0deg);}
-      100% {transform: rotate(360deg);}
-    }
     @keyframes slide {
-      0% {transform: translateX(-100%);}
-      50% {transform: translateX(0);}
-      100% {transform: translateX(100%);}
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      100% { opacity: 0; display: none; }
     }
   </style>
 </head>
-
 <body>
-  <div id="loader"></div>
+  <div id="loader">
+    <div>Loading...</div>
+  </div>
 
-  <div id="content">
+  <div id="content" style="display:none;">
     <h1 id="title">🐾 Quick Animal Fact!</h1>
     <img id="animalMeme" src="" alt="No Facts?">
     <br>
     <button onclick="refreshFact()">New Fact!</button>
     <p>Click the button for a new fact!</p>
-
-    <!-- Random Popup -->
-    <div id="popup">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThEmzHK-PJlRTKN45tVucdoT8jN980GA6BfZ6Jb3ywri_ivKAthpvKL23JMBTaHTvluVU&usqp=CAU" alt="Fish">
-      <p>The average footsteps of a fish is 0.<br>They don't have legs!</p>
-    </div>
-
-    <!-- Sound -->
     <audio id="clickSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
+    <!-- Pop-up content -->
+    <div id="popup" style="position: absolute; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); display: none;">
+      <p><strong>The average footsteps of a fish is 0</strong><br>This is because they don't have legs.</p>
+      <img src="https://i.imgur.com/U67rhZOg.jpg" alt="Fish Fact" style="max-width: 100px; height: auto; border-radius: 10px;">
+    </div>
   </div>
 
   <script>
     const memes = [
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRs6lNjiEGWZ79m5fNzXjw4OrAK5-DG_695g&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRs6lNjiEGWZ79m5fNzXjw4OrAK5-DG_695g&s",
       "https://i.pinimg.com/474x/b1/48/e3/b148e3de1813acdf760c09ddc46bab36.jpg",
       "https://img-9gag-fun.9cache.com/photo/a4oYRRy_460s.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIldM27OVI3JO3z_SL3A7efps95s1YGuPbXA&s",
@@ -174,7 +170,6 @@
       "https://pbs.twimg.com/media/E3C09PIXoAYoKLN.jpg",
       "https://i.imgur.com/RzhelQ7.jpeg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9KSJqqqEsFBpAJW13WGTtcOcEezFMw-ck6nDwLnh6iiJW0ZHJs-fof7Ck6Q_9eLNDErk&usqp=CAU"
-   
     ];
 
     const fonts = [
@@ -206,6 +201,9 @@
 
       const title = document.getElementById('title');
       title.className = randomAnim;
+
+      // Hide popup every refresh
+      document.getElementById('popup').style.display = 'none';
     }
 
     window.onload = function() {
@@ -214,18 +212,25 @@
         document.getElementById('content').style.display = 'block';
         refreshFact();
 
-        // Show random popup sometimes
-        if (Math.random() < 0.5) { // 50% chance
-          const popup = document.getElementById('popup');
-          const maxX = window.innerWidth - popup.offsetWidth;
-          const maxY = window.innerHeight - popup.offsetHeight;
+        // Show the popup at random location
+        const popup = document.getElementById('popup');
+        if (Math.random() < 0.5) {
+          popup.style.display = 'block';
+          const popupWidth = popup.offsetWidth;
+          const popupHeight = popup.offsetHeight;
+
+          const maxX = window.innerWidth - popupWidth - 20;
+          const maxY = window.innerHeight - popupHeight - 20;
+
           const randomX = Math.random() * maxX;
           const randomY = Math.random() * maxY;
+
           popup.style.left = randomX + 'px';
           popup.style.top = randomY + 'px';
-          popup.style.display = 'block';
+        } else {
+          popup.style.display = 'none';
         }
-      }, 1500); // 1.5 second loading time
+      }, 1500);
     }
   </script>
 </body>
