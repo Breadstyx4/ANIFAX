@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quick Animal Facts</title>
 
   <!-- Import Google Fonts -->
@@ -14,33 +13,30 @@
       background: linear-gradient(270deg, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1);
       background-size: 800% 800%;
       animation: gradientAnimation 15s ease infinite;
-      padding: 20px;
-      font-family: 'Fredoka', sans-serif;
+      padding: 50px;
+      transition: all 0.5s ease;
+      overflow-x: hidden;
     }
 
-   img {
-  width: 100%;
-  max-width: 400px;
-  height: 300px;
-  object-fit: contain; /* 👈 No cropping now */
-  border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-  margin-top: 20px;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  background: white; /* optional: nice background behind non-full images */
-}
-
+    img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 3em;
       margin-bottom: 20px;
     }
 
     button {
-      margin-top: 15px;
-      padding: 12px 25px;
-      font-size: 1.1em;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2em;
       border: none;
       border-radius: 10px;
       background-color: #4CAF50;
@@ -59,34 +55,39 @@
       100% {background-position: 0% 50%;}
     }
 
-    /* Loader styles */
-    .loader {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #3498db;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
+    /* Popup styling */
+    #fishPopup {
       display: none;
+      position: absolute;
+      padding: 15px;
+      background: #ffffffee;
+      border: 2px solid #4CAF50;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      width: 250px;
+      text-align: center;
+      z-index: 1000;
+      animation: fadeIn 1s ease forwards;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    #fishPopup img {
+      width: 80px;
+      height: auto;
+      margin-bottom: 10px;
     }
 
-    /* Make everything responsive */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Responsive */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
       img {
-        max-width: 90%;
-        height: auto;
+        max-width: 100%;
       }
       button {
-        font-size: 1em;
+        width: 80%;
       }
     }
   </style>
@@ -95,13 +96,16 @@
 <body>
   <h1>🐾 Quick Animal Fact!</h1>
 
-  <div class="loader" id="loader"></div> <!-- Loader spinner -->
-
-  <img id="animalMeme" src="" alt="Loading Fact...">
-  
+  <img id="animalMeme" src="" alt="No Facts?">
   <br>
   <button onclick="refreshFact()">New Fact!</button>
   <p>Click the button for a new fact!</p>
+
+  <!-- Funny Random Popup -->
+  <div id="fishPopup">
+    <img src="https://i.imgur.com/6rkPNWj.png" alt="Fish">
+    <p style="margin:0; font-weight:bold;">🐟 The average footsteps of a fish is 0.<br>This is because they don't have legs.</p>
+  </div>
 
   <!-- Sound effect -->
   <audio id="clickSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
@@ -113,26 +117,24 @@
       "https://img-9gag-fun.9cache.com/photo/a4oYRRy_460s.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIldM27OVI3JO3z_SL3A7efps95s1YGuPbXA&s",
       "https://i.redd.it/cu5drnc3n4n21.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Z_0B0TOZLrKewHaAT9XfTatJFOZa0v6oYw&s",
       "https://i.redd.it/nike2dfswar61.jpg",
       "https://pbs.twimg.com/media/E373H4GXwAEmSDR.jpg",
       "https://i.imgur.com/U67rhZOg.jpg",
       "https://www.slowrobot.com/wp-content/uploads/sites/67/2023/11/m-55-24223.webp",
+      "https://mltshp-cdn.com/r/1LZFT",
       "https://preview.redd.it/8qxnd0ozzs971.jpg?width=640&crop=smart&auto=webp&s=e09263c19b06a680f3203d035c5060d1ffca339f",
       "https://img.ifunny.co/images/f4d2030d3cae896419dc7572a43072d01c5eff6025b8b023fade9dff0f2c269a_1.jpg",
       "https://64.media.tumblr.com/129fdd05fe416bd1ac8bd57e8886c7e8/e5cbc8aa999f5e90-dc/s1280x1920/1b50639053b49fe49f2084f3903605bb7dc28ad2.jpg",
+      "https://i.pinimg.com/474x/b1/48/e3/b148e3de1813acdf760c09ddc46bab36.jpg",
       "https://i.redd.it/yp80my1e3at61.jpg",
       "https://i.redd.it/ycoqnan234s61.jpg",
       "https://images3.memedroid.com/images/UPLOADED954/616f15f15f1f3.jpeg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ_8BJihsW4JzR7RyTgkAlIKu1UfYdf8NK0b0lDI9yFEHxP0Zvvhwl3HghZQNZfDvaPM&usqp=CAU",
       "https://pbs.twimg.com/media/E3C09PIXoAYoKLN.jpg",
       "https://i.imgur.com/RzhelQ7.jpeg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9KSJqqqEsFBpAJW13WGTtcOcEezFMw-ck6nDwLnh6iiJW0ZHJs-fof7Ck6Q_9eLNDErk&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9KSJqqqEsFBpAJW13WGTtcOcEezFMw-ck6nDwLnh6iiJW0ZHJs-fof7Ck6Q_9eLNDErk&usqp=CAU"
     ];
-    <!-- Funny Random Popup -->
-<div id="fishPopup" style="display:none; position:absolute; padding:15px; background:#ffffffee; border:2px solid #4CAF50; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.3); width:250px; text-align:center; z-index:1000;">
-  <img src="https://chatgpt.com/c/680fbc79-7ce0-800c-b8a6-d0555d81682c" alt="Fish" style="width:80px; height:auto; margin-bottom:10px;">
-  <p style="margin:0; font-weight:bold;">🐟 The average footsteps of a fish is 0.<br>This is because they don't have legs.</p>
-</div>
-
 
     const fonts = [
       "'Pacifico', cursive",
@@ -143,58 +145,43 @@
     ];
 
     function refreshFact() {
-      const img = document.getElementById('animalMeme');
-      const loader = document.getElementById('loader');
-      const clickSound = document.getElementById('clickSound');// Handle random popup
-function maybeShowPopup() {
-  const chance = Math.random(); // 0 to 1
-  if (chance < 0.3) { // 30% chance
-    const popup = document.getElementById('fishPopup');
-
-    // Random position inside the screen
-    const padding = 30; // to avoid edge cutting
-    const maxX = window.innerWidth - popup.offsetWidth - padding;
-    const maxY = window.innerHeight - popup.offsetHeight - padding;
-
-    const randomX = Math.floor(Math.random() * maxX) + padding/2;
-    const randomY = Math.floor(Math.random() * maxY) + padding/2;
-
-    popup.style.left = randomX + 'px';
-    popup.style.top = randomY + 'px';
-    popup.style.display = 'block';
-  }
-}
-
-// After initial fact load
-maybeShowPopup();
-
-
-      // Play click sound
-      clickSound.play();
-
-      // Show loader and hide image
-      loader.style.display = "block";
-      img.style.opacity = 0;
+      document.getElementById('clickSound').play();
 
       const randomMeme = memes[Math.floor(Math.random() * memes.length)];
       const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
 
-      // Change font
-      document.body.style.fontFamily = randomFont;
+      const img = document.getElementById('animalMeme');
+      img.style.opacity = 0;
 
-      // Change image after small delay
       setTimeout(() => {
         img.src = randomMeme;
-        img.onload = () => {
-          loader.style.display = "none";
-          img.style.opacity = 1;
-        };
+        img.style.opacity = 1;
       }, 500);
+
+      document.body.style.fontFamily = randomFont;
+    }
+
+    function maybeShowPopup() {
+      const chance = Math.random();
+      if (chance < 0.3) {
+        const popup = document.getElementById('fishPopup');
+
+        const padding = 30;
+        const maxX = window.innerWidth - popup.offsetWidth - padding;
+        const maxY = window.innerHeight - popup.offsetHeight - padding;
+
+        const randomX = Math.floor(Math.random() * maxX) + padding / 2;
+        const randomY = Math.floor(Math.random() * maxY) + padding / 2;
+
+        popup.style.left = randomX + 'px';
+        popup.style.top = randomY + 'px';
+        popup.style.display = 'block';
+      }
     }
 
     // Initial load
     refreshFact();
+    maybeShowPopup();
   </script>
 </body>
 </html>
-
