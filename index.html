@@ -18,17 +18,19 @@
       font-family: 'Fredoka', sans-serif;
     }
 
-    img {
-      width: 100%;
-      max-width: 400px;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+   img {
+  width: 100%;
+  max-width: 400px;
+  height: 300px;
+  object-fit: contain; /* 👈 No cropping now */
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  background: white; /* optional: nice background behind non-full images */
+}
+
 
     h1 {
       font-size: 2.5em;
