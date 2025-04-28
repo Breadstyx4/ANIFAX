@@ -14,13 +14,14 @@
       background-size: 800% 800%;
       animation: gradientAnimation 15s ease infinite;
       padding: 50px;
-      transition: all 0.5s ease;
+      margin: 0;
       overflow-x: hidden;
     }
 
-    img {
-      max-width: 90%;
-      height: auto;
+    img#animalMeme {
+      width: 300px;
+      height: 300px;
+      object-fit: contain; /* Makes it resize without cropping */
       border-radius: 15px;
       box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
       margin-top: 20px;
@@ -83,8 +84,9 @@
 
     /* Responsive */
     @media (max-width: 600px) {
-      img {
-        max-width: 100%;
+      img#animalMeme {
+        width: 80%;
+        height: auto;
       }
       button {
         width: 80%;
@@ -126,7 +128,6 @@
       "https://preview.redd.it/8qxnd0ozzs971.jpg?width=640&crop=smart&auto=webp&s=e09263c19b06a680f3203d035c5060d1ffca339f",
       "https://img.ifunny.co/images/f4d2030d3cae896419dc7572a43072d01c5eff6025b8b023fade9dff0f2c269a_1.jpg",
       "https://64.media.tumblr.com/129fdd05fe416bd1ac8bd57e8886c7e8/e5cbc8aa999f5e90-dc/s1280x1920/1b50639053b49fe49f2084f3903605bb7dc28ad2.jpg",
-      "https://i.pinimg.com/474x/b1/48/e3/b148e3de1813acdf760c09ddc46bab36.jpg",
       "https://i.redd.it/yp80my1e3at61.jpg",
       "https://i.redd.it/ycoqnan234s61.jpg",
       "https://images3.memedroid.com/images/UPLOADED954/616f15f15f1f3.jpeg",
@@ -159,29 +160,37 @@
       }, 500);
 
       document.body.style.fontFamily = randomFont;
+
+      // Also refresh the popup
+      maybeShowPopup();
     }
 
     function maybeShowPopup() {
+      const popup = document.getElementById('fishPopup');
+      popup.style.display = 'none'; // Hide first
+
       const chance = Math.random();
-      if (chance < 0.3) {
-        const popup = document.getElementById('fishPopup');
+      if (chance < 0.4) { // 40% chance to show
+        setTimeout(() => {
+          const padding = 30;
+          const popupWidth = 250;
+          const popupHeight = 200;
 
-        const padding = 30;
-        const maxX = window.innerWidth - popup.offsetWidth - padding;
-        const maxY = window.innerHeight - popup.offsetHeight - padding;
+          const maxX = window.innerWidth - popupWidth - padding;
+          const maxY = window.innerHeight - popupHeight - padding;
 
-        const randomX = Math.floor(Math.random() * maxX) + padding / 2;
-        const randomY = Math.floor(Math.random() * maxY) + padding / 2;
+          const randomX = Math.floor(Math.random() * maxX) + padding / 2;
+          const randomY = Math.floor(Math.random() * maxY) + padding / 2;
 
-        popup.style.left = randomX + 'px';
-        popup.style.top = randomY + 'px';
-        popup.style.display = 'block';
+          popup.style.left = randomX + 'px';
+          popup.style.top = randomY + 'px';
+          popup.style.display = 'block';
+        }, 500); // small delay so page loads smoother
       }
     }
 
     // Initial load
     refreshFact();
-    maybeShowPopup();
   </script>
 </body>
 </html>
